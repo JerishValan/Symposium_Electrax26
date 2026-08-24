@@ -1,0 +1,629 @@
+/* ==============================================================================
+   ELECTRAX 2K26 - CORE DESIGN SYSTEM & TOKENS (main.css)
+   ============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Color Palette: Dark High-Voltage Electrical Theme */
+  --bg-primary: #030712;
+  --bg-secondary: #060e20;
+  --bg-tertiary: #0b1736;
+  --bg-surface: rgba(9, 21, 48, 0.7);
+  --bg-surface-elevated: rgba(14, 30, 68, 0.85);
+  --bg-glass: rgba(6, 15, 38, 0.65);
+  --bg-glass-heavy: rgba(3, 7, 18, 0.85);
+
+  /* Electric Accent Colors */
+  --color-electric-cyan: #00f0ff;
+  --color-cyan-glow: rgba(0, 240, 255, 0.4);
+  --color-cyan-glow-subtle: rgba(0, 240, 255, 0.15);
+  --color-electric-blue: #0088ff;
+  --color-blue-glow: rgba(0, 136, 255, 0.35);
+  --color-plasma-purple: #7928ca;
+  --color-voltage-gold: #ffd600;
+  --color-success-green: #00f59b;
+  --color-danger-red: #ff3366;
+
+  /* Text Colors */
+  --text-pure-white: #ffffff;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-accent: #00f0ff;
+
+  /* Borders & Glows */
+  --border-subtle: rgba(0, 240, 255, 0.15);
+  --border-active: rgba(0, 240, 255, 0.6);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --glow-electric-sm: 0 0 10px rgba(0, 240, 255, 0.35);
+  --glow-electric-md: 0 0 20px rgba(0, 240, 255, 0.45);
+  --glow-electric-lg: 0 0 35px rgba(0, 240, 255, 0.6);
+  --glow-box: 0 8px 32px 0 rgba(0, 240, 255, 0.12);
+
+  /* Typography */
+  --font-brand: 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Dimensions & Spacing */
+  --header-height: 76px;
+  --container-max-width: 1240px;
+  --section-spacing-desktop: 110px;
+  --section-spacing-mobile: 70px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 28px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-medium: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-Index Hierarchy */
+  --z-bg-canvas: 0;
+  --z-content: 10;
+  --z-sticky-nav: 100;
+  --z-mobile-menu: 150;
+  --z-modal-backdrop: 200;
+  --z-modal-content: 210;
+  --z-toast: 300;
+  --z-cursor: 999;
+  --z-intro-overlay: 1000;
+}
+
+/* ==============================================================================
+   CSS RESET & BASE STYLES
+   ============================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-electric-cyan);
+  color: var(--bg-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 10px var(--color-electric-cyan);
+}
+
+/* Links & Buttons */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ==============================================================================
+   LAYOUT & CONTAINER UTILITIES
+   ============================================================================== */
+.app-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-content);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section {
+  position: relative;
+  padding-top: var(--section-spacing-desktop);
+  padding-bottom: var(--section-spacing-desktop);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: var(--section-spacing-mobile);
+    padding-bottom: var(--section-spacing-mobile);
+  }
+}
+
+/* Section Header Structure */
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3.5rem auto;
+  position: relative;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-electric-cyan);
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+}
+
+.section-tag .tag-pulse {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-electric-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-electric-cyan);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.section-title {
+  font-family: var(--font-brand);
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--text-pure-white);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.section-title span {
+  background: linear-gradient(135deg, #ffffff 30%, var(--color-electric-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-description {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Glassmorphism Panel Utility */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.2);
+}
+
+/* Button Variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all var(--transition-medium);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 180, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border-color: var(--color-electric-cyan);
+}
+
+.btn-secondary {
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--text-pure-white);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 240, 255, 0.16);
+  border-color: var(--color-electric-cyan);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-glass);
+}
+
+.btn-outline:hover {
+  color: var(--text-pure-white);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Animations */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==============================================================================
+   REGISTRATION DEADLINE TICKER
+   ============================================================================== */
+.registration-ticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001; /* above navbar */
+  background: linear-gradient(90deg, #1a0a00, #2a1400, #1a0800, #2a1000);
+  border-bottom: 1px solid rgba(201, 167, 100, 0.5);
+  overflow: hidden;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  box-shadow: 0 2px 12px rgba(201, 167, 100, 0.25);
+}
+
+.registration-ticker.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ticker-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  white-space: nowrap;
+  animation: ticker-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: #e8d5a8;
+  letter-spacing: 0.06em;
+}
+
+.ticker-text strong {
+  color: #C9A764;
+  font-weight: 700;
+}
+
+.ticker-icon {
+  color: #C9A764;
+  font-size: 0.85rem;
+  animation: ticker-spark 2s infinite;
+}
+
+@keyframes ticker-spark {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Push content below ticker */
+body {
+  padding-top: 36px;
+}
+
+/* When ticker is hidden, remove padding */
+body.ticker-gone {
+  padding-top: 0;
+}
+
+/* ==============================================================================
+   GENSHIN IMPACT CLOCK THEME
+   ============================================================================== */
+
+/* Genshin color palette */
+:root {
+  --genshin-gold: #C9A764;
+  --genshin-gold-light: #f0d48a;
+  --genshin-teal: #4ec3b0;
+  --genshin-blue: #5b8dd9;
+  --genshin-dark: #1a1200;
+  --genshin-bg: rgba(15, 10, 2, 0.92);
+  --genshin-border: rgba(201, 167, 100, 0.55);
+  --genshin-glow: rgba(201, 167, 100, 0.4);
+}
+
+.genshin-clock-container {
+  position: relative;
+}
+
+.genshin-clock-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Outer decorative ring */
+.genshin-outer-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  border: 2px solid var(--genshin-border);
+  box-shadow:
+    0 0 20px rgba(201, 167, 100, 0.2),
+    inset 0 0 20px rgba(201, 167, 100, 0.1);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg, rgba(201,167,100,0.12) 30deg,
+    transparent 60deg, rgba(201,167,100,0.08) 90deg,
+    transparent 120deg, rgba(201,167,100,0.12) 150deg,
+    transparent 180deg, rgba(201,167,100,0.08) 210deg,
+    transparent 240deg, rgba(201,167,100,0.12) 270deg,
+    transparent 300deg, rgba(201,167,100,0.08) 330deg,
+    transparent 360deg
+  );
+  animation: genshin-ring-rotate 30s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.genshin-inner-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 244px;
+  height: 244px;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 167, 100, 0.3);
+  pointer-events: none;
+  z-index: 0;
+  animation: genshin-ring-rotate 20s linear infinite reverse;
+}
+
+@keyframes genshin-ring-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Star markers at 4 cardinal positions */
+.genshin-star-markers {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 270px;
+  height: 270px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.genshin-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: var(--genshin-gold);
+  font-size: 1rem;
+  text-shadow: 0 0 8px var(--genshin-gold);
+  transform-origin: center;
+  animation: genshin-star-pulse 3s ease-in-out infinite;
+}
+
+.genshin-star:nth-child(1) { transform: translate(-50%, -50%) translate(0, -135px); animation-delay: 0s; }
+.genshin-star:nth-child(2) { transform: translate(-50%, -50%) translate(135px, 0); animation-delay: 0.75s; }
+.genshin-star:nth-child(3) { transform: translate(-50%, -50%) translate(0, 135px); animation-delay: 1.5s; }
+.genshin-star:nth-child(4) { transform: translate(-50%, -50%) translate(-135px, 0); animation-delay: 2.25s; }
+
+@keyframes genshin-star-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1.3); }
+}
+/* override via nth-child */
+.genshin-star:nth-child(1) { --tx: 0px; --ty: -135px; }
+.genshin-star:nth-child(2) { --tx: 135px; --ty: 0px; }
+.genshin-star:nth-child(3) { --tx: 0px; --ty: 135px; }
+.genshin-star:nth-child(4) { --tx: -135px; --ty: 0px; }
+
+/* Genshin-styled clock dial */
+.genshin-dial {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(40, 28, 5, 0.97) 0%,
+    rgba(20, 14, 3, 0.99) 60%,
+    rgba(10, 6, 1, 1) 100%
+  ) !important;
+  border-color: var(--genshin-border) !important;
+  box-shadow:
+    0 0 0 3px rgba(201, 167, 100, 0.15),
+    0 0 40px rgba(201, 167, 100, 0.25),
+    inset 0 0 60px rgba(201, 167, 100, 0.08) !important;
+}
+
+/* Override roman numeral color for Genshin style */
+.genshin-dial .roman-numeral {
+  color: var(--genshin-gold) !important;
+  text-shadow: 0 0 8px rgba(201, 167, 100, 0.6) !important;
+  font-family: 'Palatino Linotype', 'Book Antiqua', serif !important;
+}
+
+/* Genshin clock hands */
+.genshin-hand-hour {
+  background: linear-gradient(to top, var(--genshin-gold), var(--genshin-gold-light)) !important;
+  box-shadow: 0 0 8px var(--genshin-gold) !important;
+  border-radius: 3px !important;
+  width: 5px !important;
+}
+
+.genshin-hand-minute {
+  background: linear-gradient(to top, var(--genshin-teal), #8ef5e8) !important;
+  box-shadow: 0 0 6px var(--genshin-teal) !important;
+  border-radius: 2px !important;
+  width: 3px !important;
+}
+
+.genshin-hand-second {
+  background: linear-gradient(to top, #ff6b35, #ffaa44) !important;
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.8) !important;
+  width: 2px !important;
+}
+
+/* Genshin center hub */
+.genshin-hub {
+  background: radial-gradient(circle, var(--genshin-gold-light), var(--genshin-gold)) !important;
+  box-shadow: 0 0 12px var(--genshin-gold), 0 0 24px rgba(201, 167, 100, 0.5) !important;
+  width: 14px !important;
+  height: 14px !important;
+  z-index: 20 !important;
+}
+
+/* Genshin emblem overlay (star in center area) */
+.genshin-emblem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  animation: genshin-emblem-pulse 4s ease-in-out infinite;
+}
+
+@keyframes genshin-emblem-pulse {
+  0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { opacity: 0.45; transform: translate(-50%, -50%) scale(1.15) rotate(180deg); }
+}
+
+/* Readout below clock */
+.genshin-readout {
+  background: linear-gradient(135deg, rgba(40, 25, 5, 0.95), rgba(20, 12, 2, 0.98)) !important;
+  border-color: var(--genshin-border) !important;
+  box-shadow: 0 0 20px rgba(201, 167, 100, 0.2) !important;
+}
+
+.genshin-status-tag {
+  color: var(--genshin-gold) !important;
+  border-color: rgba(201, 167, 100, 0.3) !important;
+  background: rgba(201, 167, 100, 0.1) !important;
+}
+
+.genshin-status-tag svg {
+  color: var(--genshin-gold) !important;
+}
+
+.genshin-digital {
+  color: var(--genshin-gold-light) !important;
+  text-shadow: 0 0 16px rgba(201, 167, 100, 0.6) !important;
+}
+
+.genshin-countdown {
+  background: rgba(201, 167, 100, 0.08) !important;
+  border-color: rgba(201, 167, 100, 0.25) !important;
+  color: var(--genshin-gold) !important;
+}
+
+.genshin-countdown strong {
+  color: var(--genshin-gold-light) !important;
+}
