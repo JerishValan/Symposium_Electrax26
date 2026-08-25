@@ -1,0 +1,11 @@
+# Internal/dev files
+Prompt.md
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
